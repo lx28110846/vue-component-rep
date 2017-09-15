@@ -1,11 +1,12 @@
 <template>
-    <div class="zhuanpan" :style="{height: zHeight}">
+    <div class="zhuanpan" :style="{width:zWidth,height: zHeight}">
         <div class="outer-frame">
             <div class="bg-frame">
                 <prize-board :prizeList="prizeList" 
                     :preAction="preAction"
                     :afterAction="afterAction" 
-                    @setIsPlaying="setIsPlaying"></prize-board>
+                    @setIsPlaying="setIsPlaying"
+                    ref="prizeBoard"></prize-board>
             </div>
             <div class="bubbles" :class="playingClassName">
                 <span v-for="(item,index) in 12" :key="item" :style="{transform: 'rotate(' + (30 * index + 1) + 'deg)'}">
@@ -19,24 +20,23 @@
 import PrizeBoard from './PrizeBoard'
 
 export default {
-    props: ['prizeList','preAction','afterAction'],
+    props: ['zWidth','prizeList','preAction','afterAction'],
     components: {
         PrizeBoard
     },
     data() {
         return {
-            zWidth: '',
             zHeight: '',
             playingClassName: ''
         }
     },
-    watch: {
-        zWidth: function(value) {
-            this.zHeight = value + 'px';
-        }
-    },
     mounted() {
-        this.zWidth = document.querySelector('.zhuanpan').clientWidth;
+        if(this.zWidth){
+            this.zHeight = this.zWidth;
+        } else {
+            this.zWidth = document.querySelector('.zhuanpan').clientWidth;
+            this.zHeight = this.zWidth + 'px';
+        }
     },
     methods: {
         setIsPlaying: function(isPlaying){
@@ -47,6 +47,9 @@ export default {
                 this.playingClassName = '';
                 if(this.afterAction) this.afterAction();
             }
+        },
+        start: function(loterry){
+            this.$refs.prizeBoard.start(loterry);
         }
     }
 }

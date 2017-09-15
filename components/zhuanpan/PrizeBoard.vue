@@ -7,23 +7,23 @@
                 </a>
             </li>
         </ul>
-        <starter @start="start"></starter>
+        <div class="starter">
+            <div class="arrow"></div>
+            <div class="start-btn" @click="preStart">
+                <span>抽奖</span>
+            </div>
+        </div>
     </div>
 </template>
 <script>
 import Vue from 'vue'
-import Starter from './Starter'
 
 export default {
     props: ['prizeList'],
-    components: {
-        Starter
-    },
     data() {
         return {
             aTransform: '',
             rotateStyle: {},
-            isPlaying: false,
             minRotate: 1800,
             rotate: 0,
             count: 0,
@@ -38,35 +38,26 @@ export default {
         for (var i in this.prizeList) {
             this.prizeList[i].id = i;
             var style = {
-                transform: 'rotate(' + (this.rotate * i + 90 - this.rotate/2) + 'deg) skew(' + skew + 'deg)',
+                transform: 'rotate(' + (this.rotate * i + 90 - this.rotate / 2) + 'deg) skew(' + skew + 'deg)',
                 // backgroundColor: this.prizeList[i].bgColor
             }
             Vue.set(this.prizeList[i], 'styleObject', style);
         }
     },
     methods: {
-        start: function() {
-            if(this.isPlaying) return;
-            this.isPlaying = true;
-            var self = this;
-            this.$emit("setIsPlaying",true);
-            var loterry = this.getLoterry();
-            this.rotate = this.rotate - this.rotate%360 + this.minRotate + 360 - loterry*360/this.count;
-            this.rotateStyle = {
-                transform: 'rotate('+ this.rotate +'deg)',
-                transitionDuration: this.duration+'s'
-            };
-            setTimeout(function(){
-                self.isPlaying = false;
-                self.$emit("setIsPlaying",false);
-            },this.duration*1000);
+        preStart: function() {
+            this.$emit("setIsPlaying", true);
         },
-        getLoterry: function(){
-            var vmObj = this.$parent
-            while(vmObj.$el.className != 'zhuanpan'){
-                vmObj = vmObj.$parent;
-            }
-            return vmObj.$parent.$data.loterry
+        start: function(loterry) {
+            var self = this;
+            this.rotate = this.rotate - this.rotate % 360 + this.minRotate + 360 - loterry * 360 / this.count;
+            this.rotateStyle = {
+                transform: 'rotate(' + this.rotate + 'deg)',
+                transitionDuration: this.duration + 's'
+            };
+            setTimeout(function() {
+                self.$emit("setIsPlaying", false);
+            }, this.duration * 1000);
         }
     }
 }
@@ -89,13 +80,12 @@ export default {
 
         transition: all 5s cubic-bezier(0.68, 0.01, 0.13, 1);
 
-        li:nth-child(odd){
+        li:nth-child(odd) {
             background-color: #ffbc20
         }
 
-        li:nth-child(even){
-            background-color: #FFF4D6
-            // background-color: #FFE226
+        li:nth-child(even) {
+            background-color: #FFF4D6 // background-color: #FFE226
         }
 
         li {
@@ -113,6 +103,55 @@ export default {
                 padding-top: 1em;
                 text-align: center;
             }
+        }
+    }
+}
+
+$outerFrameColor1: #ffbc20;
+$outerFrameColor0: #e60101;
+$innerBtnColor: #b50101;
+
+.starter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 4.8rem;
+    height: 4.8rem;
+    background-color: $outerFrameColor0;
+    border: 0.3rem solid $outerFrameColor1;
+    border-radius: 50%;
+    z-index: 10;
+
+    .arrow {
+        position: absolute;
+        top: -1.6rem;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 0.5rem solid transparent;
+        border-right: 0.5rem solid transparent;
+        border-bottom: 1.8rem solid $outerFrameColor0;
+    }
+
+    .start-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        width: 3.6rem;
+        height: 3.6rem;
+        background-color: $innerBtnColor;
+        border-radius: 50%;
+        box-shadow: 0 0 1rem 0px #FFF;
+
+        span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 1.2rem;
+            width: 2.4rem;
+            color: $outerFrameColor1;
         }
     }
 }
