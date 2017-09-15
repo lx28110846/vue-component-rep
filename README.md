@@ -14,8 +14,8 @@ prizeList: [{name: '一等奖'}, {name: '二等奖'}, {name: '三等奖'}, {name
 * preAction: fn，转动前执行，用于向服务端请求中奖的奖品loterry的值
 ```js
 this.$refs.zhuanpan.start(this.loterry)
-```
-在preAction中调用子组件的start方法将loterry值传入，开始旋转抽奖
+在preAction中，获取loterry后需要调用子组件的start方法将loterry值传入，开始旋转抽奖
 这里要注意在preAction中做防重复提交
+```
 
 * afterAction: fn，转动停止后执行，用于停止后进行下一步操作
