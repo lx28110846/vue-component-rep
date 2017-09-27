@@ -5,6 +5,7 @@ export default class extends Phaser.Button {
     constructor() {
         var key = 'bgmOpen';
         if(!vars.playingMusic){
+            vars.bgm.pause();
             key = 'bgmClose';
         }
         super(game, game.world.width-game.world.width*0.13, game.world.width*0.13, key,function(){

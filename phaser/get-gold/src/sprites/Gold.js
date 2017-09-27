@@ -41,7 +41,7 @@ export default class extends Phaser.Sprite {
       case 'company':
         this.height = this.width * 0.5
         //公司名称
-        let index = Math.ceil(Math.random() * vars.companyList.length);
+        let index = Math.ceil(Math.random() * vars.companyList.length-1);
         console.log(index);
         let companyName = vars.companyList[index];
         console.log(companyName)
