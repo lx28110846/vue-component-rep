@@ -34,7 +34,7 @@ export default class extends Phaser.State {
     //清零本局得分
     vars.currentGameScore = 0;
     //创建计时器
-    game.add.existing(new CountDown(5));
+    game.add.existing(new CountDown(30));
     //循环创建金币
     game.time.events.loop(600, function () {
       var gold = new Gold()
