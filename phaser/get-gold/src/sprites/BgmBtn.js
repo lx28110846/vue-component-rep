@@ -9,10 +9,12 @@ export default class extends Phaser.Button {
         }
         super(game, game.world.width-game.world.width*0.13, game.world.width*0.13, key,function(){
             if(vars.playingMusic){
+                vars.bgm.pause();
                 this.loadTexture('bgmClose');
                 vars.playingMusic = false;
                 this.angle = 0;
             } else {
+                vars.bgm.resume();
                 this.loadTexture('bgmOpen');
                 vars.playingMusic = true
             }
