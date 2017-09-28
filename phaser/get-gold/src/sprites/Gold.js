@@ -7,7 +7,7 @@ export default class extends Phaser.Sprite {
   constructor() {
     var randomTmp = Math.ceil(Math.random() * 10),
       key, widthTmp, goldScoreTmp;
-    if (randomTmp < 6) { //50%概率金币
+    if (randomTmp <= 3) { //30%概率金币
       key = 'gold';
       goldScoreTmp = Math.ceil(Math.random() * 3)+2
       switch (goldScoreTmp) {
@@ -22,12 +22,12 @@ export default class extends Phaser.Sprite {
           break;
       }
     }
-    if(randomTmp>=6 && randomTmp<9){//30%概率公司
+    if(randomTmp>3 && randomTmp<=8){//50%概率公司
       key = 'company';
       goldScoreTmp = 6;
       widthTmp = game.world.width * 0.25;
     }
-    if(randomTmp>=9 && randomTmp<11){//20%概率csii
+    if(randomTmp>8 && randomTmp<=10){//20%概率csii
       key = 'csii';
       goldScoreTmp = 8;
       widthTmp = game.world.width * 0.4;
@@ -42,9 +42,7 @@ export default class extends Phaser.Sprite {
         this.height = this.width * 0.5
         //公司名称
         let index = Math.ceil(Math.random() * vars.companyList.length-1);
-        console.log(index);
         let companyName = vars.companyList[index];
-        console.log(companyName)
         let text = game.make.text(this.world.centerX,this.world.centerY,companyName)
         text.anchor.setTo(0.5)
         text.fill = '#FFF';

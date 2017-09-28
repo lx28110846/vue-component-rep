@@ -51,8 +51,10 @@ export default class extends Phaser.State {
     //   }
     // })
     var self = this;
+    vars.companyList = ['金融科技','云计算','大数据','分布式','直销银行','营销平台','互联网银行','统一支付']
     api.getCompanyList().then(res => {
-      vars.companyList = res.data.List;
+      vars.companyList.push.apply(vars.companyList,res.data.List);
+      console.log(vars.companyList);
       self.state.start('Start')
     })
   }
