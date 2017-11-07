@@ -7,6 +7,8 @@ export default class extends Phaser.Group {
         this.enableBody = true;
         this.physicsBodyType = Phaser.Physics.ARCADE;
         this.createMultiple(config.selfPool, config.selfPic);
+        this.width = this.width * vars.zoom;
+        this.height = this.height * vars.zoom;
         // this.setAll('anchor.x', 0.5);
         this.setAll('anchor.y', 0.5);
         this.setAll('outOfBoundsKill', true);

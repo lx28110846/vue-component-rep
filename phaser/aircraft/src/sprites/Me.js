@@ -1,11 +1,12 @@
 import Phaser from 'phaser'
+import vars from '../vars'
 
 export default class extends Phaser.Sprite {
     constructor() {
         super(game, game.world.centerX, game.world.height, 'me')
         this.anchor.setTo(0.5);
-        this.width = game.world.width*0.2;
-        this.height = this.width*1.25
+        this.width = this.width * vars.zoom;
+        this.height = this.height * vars.zoom;
 
         //在游戏中构造物理身体，拥有质量，可以碰撞
         game.physics.arcade.enable(this, Phaser.Physics.ARCADE);
